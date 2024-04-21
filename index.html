@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spell Checker</title>
+  <link rel="icon" href="img/Plagiarism-Checker-.AI-Logo.png">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #b882ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    label {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    #inputData {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .suggestion {
+      color: #e74c3c;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+ 
+    .suggestion:hover {
+      font-weight: bold;
+    }
+
+    /* Additional styles and animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #inputData,
+    button,
+    #result {
+      animation: fadeIn 1s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Spell Checker Web Interface</h1>
+
+  <label for="inputData">Enter Text to Check:</label>
+  <input type="text" id="inputData" placeholder="Type text here">
+  <button onclick="checkSpelling()">Check Spelling</button>
+
+  <p id="result"></p>
+
+  <script>
+    
+    function checkSpelling() {
+      var inputData = document.getElementById('inputData').value;
+
+      // Check if the input text includes the category name "zohaib_data"
+      if (inputData.toLowerCase().includes('zohaib_data')) {
+        document.getElementById('result').innerHTML = 'This text includes the category: zohaib_data';
+      } else {
+        // If the category name is not found, perform the spell check as before
+        const corrections = checkAgainstDatabase(inputData);
+
+        if (corrections === inputData) {
+          document.getElementById('result').innerHTML = 'Correct Text: ' + corrections;
+        } else {
+          document.getElementById('result').innerHTML = 'Incorrect Text: ' + corrections;
+        }
+      }
+    }
+
+    function checkAgainstDatabase(inputData) {
+      const wordsInDatabase = [   'left','right', 'up', 'down', 'wrong', 'right', 'correct', 'corresponding',
+        'html', 'defines', 'the', 'structure', 'of', 'your', 'content',
+        'css', 'determines', 'the', 'style', 'and', 'layout',
+        'javascript', 'makes', 'the', 'content', 'interactive',
+        'therefore', 'it', 'makes', 'the', 'most', 'sense',
+        'to', 'learn', 'them', 'in', 'that', 'order',
+        'additional', 'words', 'can', 'be', 'added', 'as', 'needed',
+        'explore', 'new', 'vocabulary', 'extend', 'your', 'knowledge',
+        'with', 'diverse', 'and', 'interesting', 'lexicon',
+        'improve', 'communication', 'skills', 'and', 'language', 'proficiency',
+        'certainly', 'i\'ll', 'provide', 'individual', 'definitions', 'for', 'the', 'different', 'contexts', 'mentioned:',
+        'general', 'definition:',
+        'an', 'assay', 'is', 'a', 'systematic', 'examination', 'or', 'analysis', 'of', 'a', 'substance', 'to', 'determine', 'its', 'components,', 'quality,', 'or', 'characteristics.', 'it', 'involves', 'a', 'structured', 'approach', 'to', 'evaluating', 'and', 'understanding', 'the', 'nature', 'of', 'the', 'material', 'in', 'question.',
+        'in', 'scientific', 'and', 'analytical', 'context:',
+        'in', 'scientific', 'and', 'analytical', 'settings,', 'an', 'assay', 'refers', 'to', 'a', 'specific', 'procedure', 'or', 'method', 'used', 'to', 'assess', 'the', 'presence,', 'quantity,', 'or', 'activity', 'of', 'a', 'particular', 'substance', 'in', 'a', 'sample.', 'this', 'could', 'involve', 'various', 'techniques,', 'such', 'as', 'chemical', 'tests', 'or', 'biological', 'assays.',
+        'in', 'mining', 'and', 'metallurgy:',
+        'in', 'the', 'context', 'of', 'mining', 'and', 'metallurgy,', 'an', 'assay', 'involves', 'the', 'analysis', 'of', 'ores', 'or', 'metals', 'to', 'determine', 'their', 'composition,', 'purity,', 'or', 'quality.', 'this', 'is', 'crucial', 'for', 'assessing', 'the', 'value', 'and', 'usability', 'of', 'the', 'materials', 'in', 'industrial', 'processes.',
+        'in', 'biology', 'and', 'medicine:',
+        'in', 'biology', 'and', 'medicine,', 'an', 'assay', 'is', 'a', 'controlled', 'experiment', 'or', 'test', 'conducted', 'to', 'measure', 'the', 'presence', 'or', 'activity', 'of', 'a', 'specific', 'substance', 'in', 'biological', 'samples.', 'this', 'can', 'be', 'applied,', 'for', 'instance,', 'in', 'drug', 'development', 'or', 'understanding', 'the', 'function', 'of', 'enzymes.',
+        'these', 'definitions', 'highlight', 'how', 'the', 'term', '"assay"', 'is', 'used', 'across', 'various', 'disciplines,', 'each', 'with', 'its', 'specific', 'nuances', 'and', 'applications.',
+        'python', 'is', 'a', 'high-level,', 'general-purpose', 'programming', 'language', 'known', 'for', 'its', 'readability', 'and', 'simplicity.', 'it', 'supports', 'multiple', 'programming', 'paradigms', 'and', 'is', 'widely', 'used', 'in', 'web', 'development,', 'data', 'science,', 'artificial', 'intelligence,', 'and', 'more.',
+        'javascript:',
+        'javascript', 'is', 'a', 'versatile', 'scripting', 'language', 'primarily', 'used', 'for', 'web', 'development.', 'it', 'enables', 'dynamic', 'content', 'on', 'websites,', 'runs', 'in', 'browsers,', 'and', 'has', 'become', 'essential', 'for', 'front-end', 'and,', 'increasingly,', 'back-end', 'development.',
+        'java:',
+        'java', 'is', 'a', 'versatile,', 'object-oriented', 'programming', 'language', 'that', 'emphasizes', 'portability', 'and', 'compatibility.', 'it', 'is', 'commonly', 'used', 'in', 'enterprise-level', 'applications,', 'mobile', 'development', '(android),', 'and', 'large-scale', 'systems.',
+        'c:',
+        'c', 'is', 'a', 'procedural', 'programming', 'language', 'known', 'for', 'its', 'efficiency', 'and', 'low-level', 'memory', 'manipulation', 'capabilities.', 'it', 'has', 'influenced', 'many', 'other', 'languages', 'and', 'is', 'used', 'in', 'systems', 'programming', 'and', 'embedded', 'systems.',
+        'c++:',
+        'c++', 'is', 'an', 'extension', 'of', 'the', 'c', 'programming', 'language', 'with', 'object-oriented', 'features.', 'it', 'is', 'widely', 'used', 'in', 'game', 'development,', 'system', 'programming,', 'and', 'applications', 'where', 'high', 'performance', 'is', 'crucial.',
+        'ruby:',
+        'ruby', 'is', 'a', 'dynamic,', 'object-oriented', 'scripting', 'language', 'known', 'for', 'its', 'simplicity', 'and', 'productivity.', 'it', 'is', 'often', 'used', 'for', 'web', 'development,', 'and', 'the', 'ruby', 'on', 'rails', 'framework', 'is', 'popular', 'for', 'building', 'web', 'applications.',
+        'swift:',
+        'swift', 'is', 'a', 'programming', 'language', 'developed', 'by', 'apple', 'for', 'ios,', 'macos,', 'watchos,', 'and', 'tvos', 'app', 'development.', 'it', 'is', 'designed'
+      ];
+
+      // Split the input text into words
+      const inputWords = inputData.match(/\b\w+\b/g);
+
+      // Check each word against the database
+      const correctedWords = inputWords.map(word => {
+        const lowercaseWord = word.toLowerCase();
+        if (!wordsInDatabase.includes(lowercaseWord)) {
+          return `<span class="suggestion" onclick="suggest('${lowercaseWord}')">${word}</span>`;
+        }
+        return word;
+      });
+
+      // Join the corrected words back into a sentence
+      const correctedText = correctedWords.join(' ');
+
+      // Return the corrected text
+      return correctedText;
+    }
+
+    function suggest(word) {
+      // Replace the misspelled word with the suggested word
+      const inputElement = document.getElementById('inputData');
+      const currentText = inputElement.value;
+      const correctedText = currentText.replace(new RegExp(`\\b${word}\\b`, 'gi'), `<span class="suggestion" onclick="replaceWithSuggestion(this, '${word}')">${word}</span>`);
+      inputElement.value = correctedText;
+      checkSpelling();
+    }
+
+    function replaceWithSuggestion(spanElement, word) {
+      spanElement.parentNode.replaceChild(document.createTextNode(word), spanElement);
+      checkSpelling();
+    }
+  </script>
+</body>
+
+</html>

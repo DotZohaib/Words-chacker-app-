@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sindhi Spell Checker</title>
+  <link rel="icon" href="img/Plagiarism-Checker-.AI-Logo.png">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #b882ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    label {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    #inputData {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .suggestion {
+      color: #e74c3c;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .suggestion:hover {
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #inputData,
+    button,
+    #result {
+      animation: fadeIn 1s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>  
+  <h1>Sindhi Spell Checker Web Interface</h1>
+
+  <label for="inputData">Enter Text to Check:</label>
+  <input type="text" id="inputData" placeholder="Type Sindhi text here">
+  <button id="checkButton" onclick="checkSpelling()">Check Spelling</button>
+
+  <p id="result"></p>
+
+  <p id="Suggestion_words"></p>
+
+  <p id="Category"></p>
+
+  <script>
+    function checkSpelling() {
+      var inputData = document.getElementById('inputData').value;
+
+      const corrections = checkAgainstDatabase(inputData);
+
+      document.getElementById('result').innerHTML = corrections.includes('<span') ?
+        'Incorrect Text: ' + corrections :
+        'Correct Text: ' + corrections;
+    }
+
+    function checkAgainstDatabase(inputData) {
+      const wordsInDatabase = [
+  'سلامت', 'گھر', 'گرم', 'پرين', 'سنڌي', 'مهرباني', 'ڪتاب', 'سفر',
+  'آسمان', 'پاني', 'شكريا', 'رنگ', 'موسم', 'خوشبو', 'سنگه', 'شہر', 'قصه',
+  'موبائل', 'ٻين', 'تعليم', 'مسافر', 'پھول', 'جشن', 'راه', 'جھيل', 'منهنجو',
+  'پئندو', 'دوست', 'ميون', 'پرانو', 'نرم', 'هلو', 'پاڻي', 'ماڻهو', 'آهن',
+  'چائي', 'چاند', 'دوپهر', 'پڙهائي', 'سبز', 'سوچ', 'خواب', 'سڌا', 'گاڙي',
+  'سکڻ', 'گلاب', 'پرچم', 'راحت', 'محبت', 'خدمت', 'جاگ', 'محنت', 'رنگين',
+  'زمين', 'فصل', 'سرمه', 'روشن', 'نغمو', 'آهنگ', 'نينه', 'پردہ', 'روماني',
+  'ڪاڪ', 'دنيا', 'سوچن', 'پهرين', 'تاثر', 'محبوب', 'راز', 'خوبصورت', 'آسائي',
+  'پيار', 'آپا', 'ڪنڊو', 'چڱي', 'بلبل', 'آرام', 'راج', 'سياهي', 'پردہ',
+  'قائد', 'سڀاڻي', 'پچھيدڙ', 'شهرت', 'حرکت', 'ماڙا', 'آباد', 'پذيرائي', 'عشق',
+  'ايمان', 'صداقت', 'صبر', 'اميد', 'جدوجہد', 'قرار', 'عہد', 'راستو', 'معاونت',
+  'پنھنجا', 'پيار', 'مھنجو',
+  
+  // Additional 100 Sindhi words
+  'سچ', 'سبق', 'احساس', 'پنھنجو', 'حالت', 'زندگي', 'پوءن', 'اجازت', 'حبشر',
+  'جاڙهائي', 'قسم', 'ڪامياب', 'معلومات', 'نئي', 'بهائي', 'سڄا', 'آرٽ', 'چرڻ',
+  'رسم', 'ساگ', 'ناڪام', 'پور', 'موڙ', 'تجربو', 'تحقيق', 'سمجهان', 'معيار',
+  'سماء', 'رچن', 'اٽل', 'صورت', 'دچار', 'مطالبه', 'قديم', 'جيت', 'پھولو',
+  'مزيد', 'حكمت', 'بانهنجو', 'رائي', 'مناڻهو', 'چور', 'سورهي', 'جهان', 'سبزيل',
+  'تشويش', 'شوق', 'گادار', 'قديم', 'علاقو', 'تصوير', 'ترقي', 'رشتو', 'اعتبار',
+  'سوال', 'آرزو', 'حال', 'نشان', 'شرف', 'شوڪ', 'آءين', 'فاصلو', 'متاثر',
+  'آهنجو', 'توقع', 'حصول', 'رهايت', 'نظريه', 'گاڑي', 'نمائندگي', 'قديم', 'پهرين',
+  'سياست', 'ڪلام', 'چمچه', 'چيچر', 'سرگرمي', 'ڀت', 'دعا', 'پنهنجو', 'رياست',
+  'صلاحيت', 'نقص', 'بندي', 'بهترين', 'ملڪ', 'اختتام', 'عالم', 'راهنمائي', 'بدل',
+  'ڪمي', 'آءينه', 'چمچمه', 'پيش', 'تقدير', 'خصوصيات', 'گھڙو', 'پهرين',
+  'رقابت', 'گوهر', 'سماء', 'جمال', 'رچو', 'آچار', 'باپ', 'مڪمل', 'اڌو',
+
+  // Additional 100 Sindhi words
+  'تنها', 'بندر', 'مڪتب', 'رسي', 'آرائش', 'سخت', 'عزت', 'ڀلي', 'سان',
+  'بهروس', 'جادو', 'قسط', 'قلم', 'پرواه', 'آشنا', 'پوچ', 'چمپيءُ', 'داريايو', 'پنوم',
+  'زبان', 'گوڙه', 'سڌيو', 'آسوده', 'بهڪ', 'جهره', 'منهنجا', 'پيش', 'ڪمپيوٽر', 'مشكل',
+  'بحر', 'زيرہ', 'جھلر', 'پوءند', 'تڏهڻ', 'نشان', 'سرپرست', 'حسين', 'بساط', 'آھند',
+  'موٽرسائيڪل', 'دوره', 'استعمال', 'آب', 'سيدھي', 'تعريف', 'نرمي', 'خوراڪ', 'محترم',
+  'ڪريپٽو', 'پيارا', 'ڪيسه', 'جنهن', 'بل', 'تاج', 'چرڻ', 'سرپرست', 'مہارت',
+  'رهايو', 'منفعت', 'ڪڄي', 'تاثر', 'ڪريپٽو', 'پيارا', 'ڪيسه', 'جنهن', 'بل', 'تاج',
+  'چرڻ', 'سرپرست', 'مہارت', 'رهايو', 'منفعت', 'ڪڄي', 'تاثر', 'سنڌي', 'بهترين', 'نگاه',
+  'آئينو', 'عوام', 'صلاحيت', 'تحقيق', 'خواهش', 'پيش', 'ترتيب', 'قوت'
+];
+
+
+      const inputWords = inputData.split(/\s+/);
+
+      const correctedWords = inputWords.map(word => {
+        const lowercaseWord = word.toLowerCase();
+        if (!wordsInDatabase.includes(lowercaseWord)) {
+          return `<span class="suggestion">${word}</span>`;
+        }
+        return word;
+      });
+
+      const correctedText = correctedWords.join(' ');
+
+      return correctedText;
+    }
+  </script>
+</body>
+
+</html>

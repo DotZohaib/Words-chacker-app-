@@ -1,0 +1,76 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #b882ff, #ff88b8); 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #fff; /* White label text */
+  }
+
+  #inputData {
+    padding: 8px;
+    width: 300px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    animation: fadeIn 1s ease-in-out; /* Input animation */
+  }
+
+  button {
+    padding: 10px;
+    background: linear-gradient(45deg, #4caf50, #45a049); /* Multicolor button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    animation: fadeIn 1s ease-in-out; /* Button animation */
+  }
+
+  button:hover {
+    background: linear-gradient(45deg, #45a049, #4caf50); /* Hover effect */
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+    animation: fadeIn 1s ease-in-out; /* Result animation */
+  }
+
+  #Category {
+    font-size: 18px;
+    color: #fff; /* White category text */
+    animation: fadeIn 1s ease-in-out; /* Category animation */
+  }
+
+  .suggestion {
+    color: #e74c3c;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
